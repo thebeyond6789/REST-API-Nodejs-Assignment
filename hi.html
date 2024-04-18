@@ -1,0 +1,19 @@
+let updateLaptop = async (req, res) => {
+    let { title, slug, price, description, imageURL, id } = req.body;
+    if (!id) {
+        return res.status(201).json({
+            message: "Missed fields!"
+        })
+    }
+    pool.execute("update product set title=?,slug=?,price=?, description=?,imageURL=? where id=?", [title, slug, price, description, imageURL, id]);
+    return res.status(200).json({
+        message: "Insert successfull!",
+    });
+};
+let getAllLapTop = async (req, res) => {
+    const [rows, fields] = await pool.execute('SELECT * FROM product');
+    return res.status(200).json({
+        message: " lấy dữ liệu thành công!",
+        data: rows,
+    });
+};
